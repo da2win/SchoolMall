@@ -16,7 +16,7 @@ public class AreaServiceTest extends BaseTest {
 
     @Test
     public void getAreaList() throws Exception {
-        Assert.assertEquals("西安", areaService.getAreaList().get(0).getAreaName());
+        Assert.assertEquals("广州", areaService.getAreaList().get(0).getAreaName());
     }
 
 
