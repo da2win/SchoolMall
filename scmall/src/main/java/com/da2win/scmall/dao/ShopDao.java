@@ -10,6 +10,12 @@ import com.da2win.scmall.entity.Shop;
 public interface ShopDao {
 
     /**
+     *
+     * @param shopId
+     * @return
+     */
+    Shop queryByShopId(long shopId);
+    /**
      * add shop.
      * @param shop
      * @return

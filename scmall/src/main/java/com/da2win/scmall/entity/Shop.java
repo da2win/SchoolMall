@@ -22,7 +22,7 @@ public class Shop {
     private Date lastEditTime;
     private Integer enableStatus;
     private String advice;
-
+    private Long areaId;
     private Area area;
     private PersonInfo owner;
     private ShopCategory shopCategory;
@@ -131,6 +131,15 @@ public class Shop {
     public void setEnableStatus(Integer enableStatus) {
         this.enableStatus = enableStatus;
     }
+
+    public Long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
+    }
+
 
     public Area getArea() {
         return area;

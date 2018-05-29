@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Date;
 
 import static com.da2win.scmall.enums.ShopStateEnum.CHECK;
@@ -22,6 +23,17 @@ import static org.junit.Assert.assertEquals;
 public class ShopServiceTest extends BaseTest{
     @Autowired
     private ShopService shopService;
+
+    @Test
+    public void modifyShop() throws Exception {
+        Shop shop = new Shop();
+        shop.setShopId(1L);
+        shop.setShopName("修改后的店铺名称");
+        File image = new File("C:\\Users\\Darwin\\Pictures\\E3-Mall\\mix2s1.jpg");
+        InputStream inputStream = new FileInputStream(image);
+        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, "mx2s1.jpg");
+        System.out.println("新的图片地址:" + shopExecution.getShop().getShopImg());
+    }
 
     @Test
     public void addShop() throws Exception {

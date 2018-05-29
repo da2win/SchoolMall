@@ -1,21 +1,55 @@
 /**
  * Created by Darwin on 2018/5/25.
  */
-$(function() {
+$(function () {
+    var shopId = getQueryString("shopId");
+    var isEdit = shopId ? true : false;
     var initUrl = '/scmall/shopadmin/getshopinitinfo';
     var registerShopUrl = '/scmall/shopadmin/registershop';
-    alert(initUrl);
-    getShopInitInfo();
+    var shopInfoUrl = '/scmall/shopadmin/getshopbyid?shopId=' + shopId;
+    var editShopUrl = '/scmall/shopadmin/modifyshop';
+
+    if (!isEdit) {
+        getShopInitInfo()
+    } else {
+        getShopInfo(shopId);
+    }
+
+    function getShopInfo(shopId) {
+        $.getJSON(shopInfoUrl, function (data) {
+
+            if (data.success) {
+                var shop = data.shop;
+                $("#shop-name").val(shop.shopName);
+                $("#shop-addr").val(shop.shopAddr);
+                $("#shop-phone").val(shop.phone);
+                $("#shop-desc").val(shop.shopDesc);
+                var shopCategory = '<option data-id="'
+                    + shop.shopCategory.shopCategoryId + '" selected>'
+                    + shop.shopCategory.shopCategoryName + '</option>';
+                var tempAreaHtml = '';
+                data.areaList.map(function(item) {
+                    tempAreaHtml += '<option data-id="' + item.areaId + '">'
+                        + item.areaName + '</option>';
+                });
+                $("#shop-category").html(shopCategory);
+                $("#shop-category").attr("disabled","disabled");
+                $("#area").html(tempAreaHtml);
+                $("#area option[data-id='" + shop.area.areaId +"']").attr("selected", "selected");
+            }
+        });
+    }
+
     function getShopInitInfo() {
-        $.getJSON(initUrl, function(data) {
+        $.getJSON(initUrl, function (data) {
             if (data.success) {
                 var tempHtml = "";
                 var tempAreaHtml = "";
-                data.shopCategoryList.map(function(item, index) {
+                data.shopCategoryList.map(function (item, index) {
                     tempHtml += '<option data-id="' + item.shopCategoryId + '">'
-                            + item.shopCategoryName + '</option>';
+                        + item.shopCategoryName + '</option>';
                 });
-                data.areaList.map(function(item, index) {
+                data.areaList.map(function (item, index) {
                     tempAreaHtml += '<option data-id="' + item.areaId + '">'
                         + item.areaName + '</option>';
                 });
@@ -23,19 +57,22 @@ $(function() {
                 $("#area").html(tempAreaHtml);
             }
         });
-        $("#submit").click(function() {
+        $("#submit").click(function () {
             var shop = {};
+            if (isEdit) {
+                shop.shopId = shopId;
+            }
             shop.shopName = $("#shop-name").val();
             shop.shopAddr = $("#shop-addr").val();
-            shop.phone= $("#phone").val();
-            shop.shopDesc= $("#shop-desc").val();
+            shop.phone = $("#phone").val();
+            shop.shopDesc = $("#shop-desc").val();
             shop.shopCategory = {
-                shopCategoryId: $("#shop-category").find("option").not(function() {
+                shopCategoryId: $("#shop-category").find("option").not(function () {
                     return !this.selected;
                 }).data("id")
             };
             shop.area = {
-                areaId: $("#area").find("option").not(function() {
+                areaId: $("#area").find("option").not(function () {
                     return !this.selected;
                 }).data("id")
             }
@@ -51,7 +88,7 @@ $(function() {
             }
             formData.append("verifyCodeActual", verifyCodeActual);
             $.ajax({
-                url: registerShopUrl,
+                url: (isEdit ? editShopUrl : registerShopUrl),
                 type: "post",
                 data: formData,
                 contentType: false,
