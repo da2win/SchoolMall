@@ -24,6 +24,21 @@ public class ShopServiceTest extends BaseTest{
     @Autowired
     private ShopService shopService;
 
+
+    @Test
+    public void getShopList() throws Exception {
+        Shop shopCondition = new Shop();
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(1L);
+        shopCondition.setOwner(owner);
+        ShopCategory shopCategory = new ShopCategory();
+        shopCategory.setShopCategoryId(1L);
+        shopCondition.setShopCategory(shopCategory);
+        ShopExecution se = shopService.getShopList(shopCondition, 5, 2);
+        System.out.println(se.getShopList().size());
+        System.out.println(se.getCount());
+    }
+
     @Test
     public void modifyShop() throws Exception {
         Shop shop = new Shop();

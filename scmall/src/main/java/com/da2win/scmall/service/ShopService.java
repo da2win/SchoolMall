@@ -14,6 +14,8 @@ import java.io.InputStream;
  */
 public interface ShopService {
 
+    ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize);
+
     /**
      * 添加商户
      * @param shop
