@@ -27,4 +27,9 @@ public class ShopAdminController {
     public String shopManagement() {
         return "shop/shopmanagement";
     }
+
+    @RequestMapping("/pcmanagement")
+    public String pcManagement() {
+        return "shop/pcmanagement";
+    }
 }
