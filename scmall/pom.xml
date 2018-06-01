@@ -13,6 +13,7 @@
     <url>http://www.example.com</url>
     <properties>
         <spring.version>4.3.7.RELEASE</spring.version>
+        <JAVA_HOME>F:\Program\Environment\Java\jdk 1.8</JAVA_HOME>
     </properties>
 
     <dependencies>
@@ -150,6 +151,9 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <bootclasspath>${JAVA_HOME}/jre/lib/rt.jar</bootclasspath>
+                    </compilerArguments>
                 </configuration>
             </plugin>
         </plugins>
